@@ -1,37 +1,48 @@
 
 function tableCreate() {
-
-  var cellVal = 99;
-
+  //using document create table in html
   var body = document.getElementsByTagName("body")[0];
-  var tbl = document.createElement("table");
-  var tblBody = document.createElement("tbody");
+  var table = document.createElement("table");
+  var tableBody = document.createElement("tbody");
 
-  for (var i = 0; i < 50; i++)//50 is a sample number
+  var cellVal = 11;//testing
+
+  for (var i = 0; i < 5; i++)//50 is a sample number
   {
     var row = document.createElement("tr");
-
-    for (var j = 0; j < 10; j++) //10 is a sample number
+    for (var j = 0; j < 2; j++) //10 is a sample number
     {
       var cell = document.createElement("td");
-      var text = '('+(i+1)+','+(j+1)+')';
-      // var tempVal = cellVal;
-      // tempVal /= 1000;
-      // var temp = cellVal % 10;
-      // if (cellVal >= 1) {
-      //   var text += ","+cellVal;
-      // }
-      //var text = "test";
+      var temp = cellVal;
+      var text = (cellVal % 1000) == 0 ? "000" : (cellVal % 1000);
+
+      if (cellVal > 999)
+      {
+        temp /= 1000;
+        while (temp > 999)
+        {
+          tempMod = temp % 1000;
+          temp /= 1000;
+          if (Math.floor(tempMod) == 0) {
+            text = "000" + "," + text;
+          }
+          else {
+            text = Math.floor(tempMod) + "," + text;
+          }
+        }
+        text = Math.floor(temp) + "," + text;
+      }
+
       var cellText = document.createTextNode(text);
       cell.appendChild(cellText);
       row.appendChild(cell);
-      cellVal += 1000;
+      cellVal *= 10;
     }
 
-    tblBody.appendChild(row);
+    tableBody.appendChild(row);
   }
 
-  tbl.appendChild(tblBody);
-  body.appendChild(tbl);
-  tbl.setAttribute("border", "1");
+  table.appendChild(tableBody);
+  body.appendChild(table);
+  table.setAttribute("border", "1");
 }
