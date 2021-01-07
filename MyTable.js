@@ -5,7 +5,8 @@ function tableCreate() {
   var table = document.createElement("table");
   var tableBody = document.createElement("tbody");
 
-  var cellVal = 11;//testing
+//waiting for php interface
+  var cellVal = 744;//testing
 
   for (var i = 0; i < 5; i++)//50 is a sample number
   {
@@ -15,7 +16,6 @@ function tableCreate() {
       var cell = document.createElement("td");
       var temp = cellVal;
       var text = (cellVal % 1000) == 0 ? "000" : (cellVal % 1000);
-
       if (cellVal > 999)
       {
         temp /= 1000;
@@ -32,13 +32,12 @@ function tableCreate() {
         }
         text = Math.floor(temp) + "," + text;
       }
-
       var cellText = document.createTextNode(text);
       cell.appendChild(cellText);
       row.appendChild(cell);
-      cellVal *= 10;
+      cellVal += 235;
     }
-
+    cellVal *= 100;
     tableBody.appendChild(row);
   }
 
