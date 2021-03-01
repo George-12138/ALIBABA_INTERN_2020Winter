@@ -8,13 +8,34 @@ class MockingData extends React.Component {
   constructor(props)
   {
     super(props);
-    this.txt = 0;
+    this.rdm = Math.floor(Math.random() * 10000000000);
+    this.str = this.rdm.toString();
+    this.len =  this.str.length;
+    this.text = [];
   }
+
+  splitData()
+  {
+    var comma = 0;
+    for (var i = this.len; i > 0; i--)
+    {
+      if (comma == 0 || comma == this.len) {
+      }
+      else {
+        if (comma % 3 == 0) {
+          this.str = [this.str.substr(0,i),this.str.substr(i)].join(',');
+        }
+      }
+      comma++;
+    }
+    return(this.str);
+  }
+
   render()
   {
-    this.txt = Math.floor(Math.random() * 100000000);
     return(
-      this.txt
+      this.str +"\n"+
+      this.splitData()
     );
   }
 }
@@ -26,6 +47,7 @@ class SplitFunc extends React.Component {
     this.temp = 0;
     this.tempMod = 0;
     this.text = "";
+    this.demodata = 1234312567;
   }
 
   splithelperfunc(cellVal)
@@ -54,7 +76,7 @@ class SplitFunc extends React.Component {
   render()
   {
     return(
-      this.splithelperfunc(MockingData)
+      this.splithelperfunc(this.demodata)
     );
   }
 }
@@ -91,7 +113,7 @@ class Row extends React.Component {
     }
     return(this.celltxt);
   }
-  
+
   render()
   {
     return(
