@@ -5,34 +5,70 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 class MockingData extends React.Component {
-  render(){
-    var txt = 0;
-    txt = Math.floor(Math.random() * 100000000);
-    var demo = "demo"
-    return( txt );
-    //return( demo );
-  }
-}
-/*
-class SplitFunc extends React.Component {
-  splithelperfunc(i)
+  constructor(props)
   {
-    return (i);
+    super(props);
+    this.txt = 0;
   }
-
-  render(){
+  render()
+  {
+    this.txt = Math.floor(Math.random() * 100000000);
     return(
-      {this.splithelperfunc(MockingData)}
+      this.txt
     );
   }
 }
-*/
-class Cell extends React.Component {
+
+class SplitFunc extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.temp = 0;
+    this.tempMod = 0;
+    this.text = "";
+  }
+
+  splithelperfunc(cellVal)
+  {
+    this.temp = cellVal;
+    this.text = (cellVal % 1000) == 0 ? "000" : (cellVal % 1000);
+    if (cellVal > 999)
+    {
+      this.temp /= 1000;
+      while (this.temp > 999)
+      {
+        this.tempMod = this.temp % 1000;
+        this.temp /= 1000;
+        if (Math.floor(this.tempMod) == 0) {
+          this.text = "000" + "," + this.text;
+        }
+        else {
+          this.text = Math.floor(this.tempMod) + "," + this.text;
+        }
+      }
+      this.text = Math.floor(this.temp) + "," + this.text;
+    }
+    return (this.text);
+  }
+
   render()
   {
-    var cell = {"text-align":"right","border": "1px solid red"};
     return(
-        <td style = {cell}>
+      this.splithelperfunc(MockingData)
+    );
+  }
+}
+
+class Cell extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.cell = {"text-align":"right","border": "1px solid red"};
+  }
+  render()
+  {
+    return(
+        <td style = {this.cell}>
           <MockingData/>
         </td>
     );
@@ -40,37 +76,49 @@ class Cell extends React.Component {
 }
 
 class Row extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.celltxt = [];
+  }
 
-    callCell(cell)
+  callCell(cell)
+  {
+    this.celltxt = [];
+    for(var i = 0;i < cell; i++)
     {
-      var celltxt = [];
-      for(var i = 0;i < cell; i++)
-      {
-        celltxt.push(<Cell/>);
-      }
-      return(celltxt);
+      this.celltxt.push(<Cell/>);
     }
-    render()
-    {
-      return(
-        // the num 9 should be replace by a variable
-        <tr>
-          {this.callCell(9)}
-        </tr>
-      )
-    }
+    return(this.celltxt);
+  }
+  
+  render()
+  {
+    return(
+      // the num 9 should be replace by a variable
+      <tr>
+        {this.callCell(9)}
+      </tr>
+    )
+  };
 }
 
 class Table extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.rowtxt = [];
+  }
+
   callrow(row)
   {
-    var rowtxt = [];
     for(var i = 0;i < row; i++)
     {
-      rowtxt.push(<Row/>);
+      this.rowtxt.push(<Row/>);
     }
-    return( rowtxt );
+    return( this.rowtxt );
   }
+
   render()
   {
     // the num 9 should be replace by a variable
@@ -79,7 +127,7 @@ class Table extends React.Component {
         {this.callrow(9)}
       </table>
     )
-  }
+  };
 }
 
 ReactDOM.render(
