@@ -3,81 +3,37 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-class MockingData extends React.Component {
+//table row cell mock split draw
+class Mocking extends React.Component {
+  constructor() {
+    this.dataInfo = {col:4,row:5};//[0]for col,[1] for row]
+  }
+  render(){
+    return(this.dataInfo);
+  }
+}
+class DataEDIT extends React.Component {
   constructor(props)
   {
     super(props);
-    this.rdm = Math.floor(Math.random() * 10000000000);
-    this.str = this.rdm.toString();
-    this.len =  this.str.length;
-    this.text = [];
+    this.num = Math.floor(Math.random() * 10000000);
+    this.str = this.num.toString();
+    this.len = this.str.length;
   }
-
   splitData()
   {
     var comma = 0;
     for (var i = this.len; i > 0; i--)
     {
-      if (comma == 0 || comma == this.len) {
-      }
-      else {
-        if (comma % 3 == 0) {
-          this.str = [this.str.substr(0,i),this.str.substr(i)].join(',');
-        }
-      }
-      comma++;
+      if (comma != 0 && comma != this.len && comma % 3 == 0)
+          this.str = [this.str.substr(0,i),this.str.substr(i)].join(",");
+      comma +=1 ;
     }
     return(this.str);
   }
-
   render()
   {
-    return(
-      this.str +"\n"+
-      this.splitData()
-    );
-  }
-}
-
-class SplitFunc extends React.Component {
-  constructor(props)
-  {
-    super(props);
-    this.temp = 0;
-    this.tempMod = 0;
-    this.text = "";
-    this.demodata = 1234312567;
-  }
-
-  splithelperfunc(cellVal)
-  {
-    this.temp = cellVal;
-    this.text = (cellVal % 1000) == 0 ? "000" : (cellVal % 1000);
-    if (cellVal > 999)
-    {
-      this.temp /= 1000;
-      while (this.temp > 999)
-      {
-        this.tempMod = this.temp % 1000;
-        this.temp /= 1000;
-        if (Math.floor(this.tempMod) == 0) {
-          this.text = "000" + "," + this.text;
-        }
-        else {
-          this.text = Math.floor(this.tempMod) + "," + this.text;
-        }
-      }
-      this.text = Math.floor(this.temp) + "," + this.text;
-    }
-    return (this.text);
-  }
-
-  render()
-  {
-    return(
-      this.splithelperfunc(this.demodata)
-    );
+    return(this.splitData());
   }
 }
 
@@ -91,7 +47,7 @@ class Cell extends React.Component {
   {
     return(
         <td style = {this.cell}>
-          <MockingData/>
+          <DataEDIT/>
         </td>
     );
   }
@@ -138,7 +94,7 @@ class Table extends React.Component {
     {
       this.rowtxt.push(<Row/>);
     }
-    return( this.rowtxt );
+    return(this.rowtxt);
   }
 
   render()
