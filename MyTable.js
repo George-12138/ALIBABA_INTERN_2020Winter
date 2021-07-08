@@ -5,7 +5,7 @@ function tableCreate() {
   var table = document.createElement("table");
   var tableBody = document.createElement("tbody");
 
-//waiting for php interface
+  //waiting for php interface
   var cellVal = 744;//testing
 
   for (var i = 0; i < 5; i++)//50 is a sample number

@@ -1,108 +1,88 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { Mocking } from './services/mocking';
 import reportWebVitals from './reportWebVitals';
 //table row cell mock split draw
-class Mocking extends React.Component {
-  constructor() {
-    this.dataInfo = {col:4,row:5};//[0]for col,[1] for row]
-  }
-  render(){
-    return(this.dataInfo);
-  }
-}
+
 class DataEDIT extends React.Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
-    this.num = Math.floor(Math.random() * 10000000);
-    this.str = this.num.toString();
-    this.len = this.str.length;
+    this.mockData = new Mocking;
+    this.state = {
+      str: ""
+    }
   }
-  splitData()
-  {
+  splitData(str = "") {
     var comma = 0;
-    for (var i = this.len; i > 0; i--)
-    {
-      if (comma != 0 && comma != this.len && comma % 3 == 0)
-          this.str = [this.str.substr(0,i),this.str.substr(i)].join(",");
-      comma +=1 ;
+    const len = str.length;
+    for (var i = len; i > 0; i--) {
+      if (comma !== 0 && comma !== this.len && comma % 3 === 0)
+        str = [str.substr(0, i), str.substr(i)].join(",");
+      comma += 1;
     }
-    return(this.str);
+    return str;
   }
-  render()
-  {
-    return(this.splitData());
+  componentDidMount() {
+    this.mockData.getData().then(res => {
+      this.setState({
+        str: this.splitData(res)
+      });
+    });
   }
-}
-
-class Cell extends React.Component {
-  constructor(props)
-  {
-    super(props);
-    this.cell = {"text-align":"right","border": "1px solid red"};
+  render() {
+    return (this.state.str);
   }
-  render()
-  {
-    return(
-        <td style = {this.cell}>
-          <DataEDIT/>
-        </td>
-    );
-  }
-}
-
-class Row extends React.Component {
-  constructor(props)
-  {
-    super(props);
-    this.celltxt = [];
-  }
-
-  callCell(cell)
-  {
-    this.celltxt = [];
-    for(var i = 0;i < cell; i++)
-    {
-      this.celltxt.push(<Cell/>);
-    }
-    return(this.celltxt);
-  }
-
-  render()
-  {
-    return(
-      // the num 9 should be replace by a variable
-      <tr>
-        {this.callCell(9)}
-      </tr>
-    )
-  };
 }
 
 class Table extends React.Component {
   constructor(props)
   {
     super(props);
-    this.rowtxt = [];
+    this.state = {
+      cellStyle: {"text-align":"right","border": "1px solid red"},
+      rowLen:2,
+      colLen:3,
+      num:0
+    }
+  }
+  createTable(row = [])
+  {
+    for(var i=0;i < this.state.rowLen; i++)
+    {
+      const col = [];
+      for(var j=0;j < this.state.colLen; j++)
+      {
+        col.push(
+          <td style = {this.state.cellStyle}>
+            <DataEDIT />
+          </td>
+        );
+      }
+      row.push(
+        <tr>
+          {col}
+        </tr>);
+    }
+    return(row);
   }
 
-  callrow(row)
-  {
-    for(var i = 0;i < row; i++)
-    {
-      this.rowtxt.push(<Row/>);
-    }
-    return(this.rowtxt);
+  inputChange(){
+
+    let val=this.refs.num.value;
+    this.setState({
+      num:val
+    })
+  }
+  getInputValue(){
+    window.alert("Hello world!");
   }
 
   render()
   {
-    // the num 9 should be replace by a variable
     return(
       <table>
-        {this.callrow(9)}
+        {this.createTable()}
       </table>
     )
   };
@@ -110,7 +90,7 @@ class Table extends React.Component {
 
 ReactDOM.render(
   <Table/>,
-  document.body
+  document.getElementById('2dArray')
 );
 
 // If you want to start measuring performance in your app, pass a function
