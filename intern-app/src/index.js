@@ -41,17 +41,14 @@ class Table extends React.Component {
     super(props);
     this.state = {
       cellStyle: {"text-align":"right","border": "1px solid red"},
-      rowLen:2,
-      colLen:3,
-      num:0
     }
   }
   createTable(row = [])
   {
-    for(var i=0;i < this.state.rowLen; i++)
+    for(var i=0;i < this.props.rowLen; i++)
     {
       const col = [];
-      for(var j=0;j < this.state.colLen; j++)
+      for(var j=0;j < this.props.colLen; j++)
       {
         col.push(
           <td style = {this.state.cellStyle}>
@@ -81,26 +78,30 @@ class TextChange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputRow: "空空如也~",
-      inputCol: "空空如也~",
+      newRow:0,
+      newCol:0,
+      inputRow: 2,
+      inputCol: 2,
     }
   }
 
   event_happenner = () => {
-    alert(this.state.inputRow.value)
-  }
-  cleanRowDefault = () => {
-    this.state.inputRow = "";
-  }
-  cleanColDefault = () => {
-    this.state.inputCol = "";
+    alert(this.state.inputRow.value);
+    this.state.newRow = this.state.inputRow;
+    this.state.newCol = this.state.inputCol;
+    // return
+    // (
+    //   <Table rowLen = {this.state.inputRow} colLen = {this.state.inputCol}/>
+    // );
+    // <Table rowLen = {this.state.inputRow} colLen = {this.state.inputCol}/>
   }
   render() {
     return (
       <div>
-      <input type="text" ref={input => this.state.inputRow = input} onFocus = {()=>this.cleanRowDefault()} defaultValue = {this.props.inputRow} />
-      <input type="text" ref={input => this.state.inputCol = input} onFocus = {()=>this.cleanColDefault()} defaultValue = {this.props.inputCol} />
+      Row<input type="number" ref={input => this.state.inputRow = input}/>
+      Col<input type="number" ref={input => this.state.inputCol = input}/>
       <button onClick = {()=>this.event_happenner()}>fk me</button>
+      <Table rowLen = {this.state.inputRow} colLen = {this.state.inputCol}/>
       </div>
       );
   }
