@@ -81,20 +81,25 @@ class TextChange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputROw: "空空如也~",
-      inputCol: "空空如也~"
+      inputRow: "空空如也~",
+      inputCol: "空空如也~",
     }
   }
 
-  event_happenner =()=>{
-    alert(this.state.inputINFO.value)
+  event_happenner = () => {
+    alert(this.state.inputRow.value)
   }
-
+  cleanRowDefault = () => {
+    this.state.inputRow = "";
+  }
+  cleanColDefault = () => {
+    this.state.inputCol = "";
+  }
   render() {
     return (
       <div>
-      <input type="text" ref={input => this.state.inputROw = input} defaultValue = "row length" />
-      <input type="text" ref={input => this.state.inputCol = input} defaultValue = "col length" />
+      <input type="text" ref={input => this.state.inputRow = input} onFocus = {()=>this.cleanRowDefault()} defaultValue = {this.props.inputRow} />
+      <input type="text" ref={input => this.state.inputCol = input} onFocus = {()=>this.cleanColDefault()} defaultValue = {this.props.inputCol} />
       <button onClick = {()=>this.event_happenner()}>fk me</button>
       </div>
       );
