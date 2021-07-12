@@ -67,31 +67,43 @@ class Table extends React.Component {
     return(row);
   }
 
-  inputChange(){
-
-    let val=this.refs.num.value;
-    this.setState({
-      num:val
-    })
-  }
-  getInputValue(){
-    window.alert("Hello world!");
-  }
-
   render()
   {
     return(
       <table>
         {this.createTable()}
       </table>
-    )
-  };
+    );
+  }
 }
 
-ReactDOM.render(
-  <Table/>,
-  document.getElementById('2dArray')
-);
+class TextChange extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputROw: "空空如也~",
+      inputCol: "空空如也~"
+    }
+  }
+
+  event_happenner =()=>{
+    alert(this.state.inputINFO.value)
+  }
+
+  render() {
+    return (
+      <div>
+      <input type="text" ref={input => this.state.inputROw = input} defaultValue = "row length" />
+      <input type="text" ref={input => this.state.inputCol = input} defaultValue = "col length" />
+      <button onClick = {()=>this.event_happenner()}>fk me</button>
+      </div>
+      );
+  }
+}
+
+
+ReactDOM.render(<TextChange/>,document.getElementById('rowcolVal'));
+ReactDOM.render(<Table/>,document.getElementById('2dArray'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
