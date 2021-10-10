@@ -78,17 +78,22 @@ class TextChange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newRow:0,
-      newCol:0,
+      newRow:1,
+      newCol:1,
       inputRow: 2,
       inputCol: 2,
     }
   }
-
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        newRow: this.state.inputRow,
+        newCol: this.state.inputRow
+      });
+    }, 5000);
+  }
   event_happenner = () => {
-    alert(this.state.inputRow.value);
-    this.state.newRow = this.state.inputRow;
-    this.state.newCol = this.state.inputCol;
+    alert(this.state.newRow.value);
     // return
     // (
     //   <Table rowLen = {this.state.inputRow} colLen = {this.state.inputCol}/>
@@ -101,7 +106,7 @@ class TextChange extends React.Component {
       Row<input type="number" ref={input => this.state.inputRow = input}/>
       Col<input type="number" ref={input => this.state.inputCol = input}/>
       <button onClick = {()=>this.event_happenner()}>fk me</button>
-      <Table rowLen = {this.state.inputRow} colLen = {this.state.inputCol}/>
+      <Table rowLen = {this.state.newRow} colLen = {this.state.newCol}/>
       </div>
       );
   }

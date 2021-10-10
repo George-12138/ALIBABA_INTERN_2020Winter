@@ -4,6 +4,5 @@ export class Mocking {
   }
   getData(){
     return new Promise(resolve =>{ setTimeout(()=>{resolve(this.data)},200); });
-
   }
 }
